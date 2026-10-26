@@ -1,0 +1,34 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+*.egg
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+*.pem
+*.key
+.claude/
+.shortcuts.json
+*.keyscheme
+*.mid
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.mp4
+*.mov
+*.npy
+*.pth
+.env
+.env.*
+
+# Reference material — copyrighted (e.g. the Emagic Logic Control manual)
+# or personal exports (keyboard shortcuts HTML). Keep locally, never publish.
+external/

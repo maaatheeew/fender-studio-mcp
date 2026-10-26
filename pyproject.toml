@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fender-studio-mcp"
+version = "0.1.0"
+description = "Unofficial MCP server and audio-to-MIDI workflows for Fender Studio Pro demos"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "fender-studio-mcp contributors" }]
+keywords = ["mcp", "midi", "studio-pro", "fender", "daw", "mackie-control"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+
+dependencies = [
+    "mcp>=2.0.0",
+    "python-rtmidi>=1.5.0",
+    "anyio>=4.0.0",
+    "click>=8.1.0",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.12.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+fender-studio-mcp = "studio_pro_mcp.server:main"
+
+[project.urls]
+Repository = "https://github.com/maaatheeew/fender-studio-mcp"
+FenderStudioProMCP = "https://github.com/pajdarova/FenderStudioProMCP"
+StudioOneMcp = "https://github.com/tiwadara/StudioOneMcp"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/studio_pro_mcp"]
+
+[tool.ruff]
+src = ["src"]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+# keystrokes.py's Windows automation path uses ctypes.WinDLL, which typeshed
+# only exposes under the win32-conditional stubs. Pin the platform so mypy
+# behaves the same on CI (ubuntu-latest) as on a Windows dev machine, instead
+# of silently gaining/losing errors depending on which OS runs it.
+platform = "win32"
+strict = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["rtmidi", "rtmidi.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
